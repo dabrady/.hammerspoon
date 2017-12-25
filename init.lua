@@ -1,8 +1,5 @@
 hs.logger.setGlobalLogLevel('debug')
 
--- An alias for utility functions
-my = hs.loadSpoon('Utilities').utils
-
 require('scripts/window_management')
 require('scripts/microphone_controller')
 

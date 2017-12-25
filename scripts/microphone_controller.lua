@@ -1,3 +1,4 @@
+local my = {canvas = require('extensions.canvas')}
 local micImage = hs.image.imageFromName('NSTouchBarAudioInputTemplate')
 local mutedMicImage = hs.image.imageFromName('NSTouchBarAudioInputMuteTemplate')
 local builtinMicrophoneUID = 'AppleHDAEngineInput:1B,0,1,0:1'

@@ -1,3 +1,5 @@
+local my = {spotify = require('extensions.spotify')}
+
 --- The hisses are too sensitive for an environment where lots of sound can reach the microphone.
 -- local BEGIN_HISS = 1
 -- local END_HISS = 2
