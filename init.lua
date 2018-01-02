@@ -1,25 +1,42 @@
+-- hs
 hs.logger.setGlobalLogLevel('debug')
+hs.window.animationDuration = 0.0
 
-require('scripts/window_management')
-require('scripts/microphone_controller')
+-------------------------
+-- Load all the things --
+WindowMgr = require('scripts/window_management')
+MC = require('scripts/microphone_controller')
 
--- require('scripts/config_watcher'):start()
-require('scripts/wifi_watcher'):start()
---  require('project_watcher'):start()
-require('scripts/headphone_watcher'):start()
-require('scripts/spotify_listener'):start()
+-- ConfigWatcher = require('scripts/config_watcher')
+WifiWatcher = require('scripts/wifi_watcher')
+HeadphoneWatcher = require('scripts/headphone_watcher')
+SpotifyListener = require('scripts/spotify_listener')
 
-
------
 Mode = hs.loadSpoon('Mode')
 -- local work = Mode:availableModes()['Work']
 -- work:enter()
 
+--------------------------
+-- Start all the things --
+local modsToStart = {
+  -- ConfigWatcher,
+  WifiWatcher,
+  HeadphoneWatcher,
+  SpotifyListener
+}
+hs.fnutils.each(modsToStart, function(module) module:start() end)
 
+-------------------------------------
+-- Stop all the things on shutdown --
+hs.shutdownCallback = function()
+  hs.fnutils.each(modsToStart, function(module) module:stop() end)
+end
 
 -------
 hs.alert.show('Config refreshed')
 -------
+
+
 --[[ NOTE https://github.com/szymonkaliski/Dotfiles/blob/master/Dotfiles/hammerspoon
 
 -------------------------
