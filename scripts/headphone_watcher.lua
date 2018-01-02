@@ -41,6 +41,9 @@ local headphoneWatcher = {}
 function headphoneWatcher:start()
   audioOutput:watcherStart()
 end
+function headphoneWatcher:stop()
+  audioOutput:watcherStop()
+end
 
 ------
 
