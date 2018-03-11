@@ -32,7 +32,7 @@ local modsToStart = {
   -- ConfigWatcher,
   WifiWatcher,
   HeadphoneWatcher,
-  SpotifyListener
+  -- SpotifyListener
 }
 hs.fnutils.each(modsToStart, function(module) module:start() end)
 
