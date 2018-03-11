@@ -51,6 +51,16 @@ function table_ext.keys(t)
   return keys
 end
 
+-- Returns a list of the values of the given table.
+function table_ext.values(t)
+  if type(t) ~= 'table' then return nil end
+
+  local values = {}
+  for _,v in pairs(t) do
+    table.insert(values, v)
+  end
+  return values
+end
 
 -----------------
 --
