@@ -1,9 +1,19 @@
--- hs
+-- Hammerspoon base config
 hs.logger.setGlobalLogLevel('debug')
 hs.window.animationDuration = 0.0
 
 -------------------------
 -- Load all the things --
+
+-- Custom extensions for console use
+do
+  -- scope 'fs' to do-block
+  local fs = require('extensions/fs')
+  print('\t-- loading custom extensions')
+  -- expose 'my' as new global variable
+  my = fs.loadAllScripts('extensions')
+end
+
 WindowMgr = require('scripts/window_management')
 MC = require('scripts/microphone_controller')
 
