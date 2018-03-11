@@ -62,6 +62,21 @@ function table_ext.values(t)
   return values
 end
 
+-- Executes, across a table, a function that transforms each key-value pair into a new key-value pair, and
+-- concatenates all the resulting tables together.
+function table_ext.map(t, fn)
+  if type(t) ~= 'table' then return nil end
+  if type(fn) ~= 'function' then return nil end
+
+  local results = {}
+  for k,v in pairs(t) do
+    local k,v = fn(k,v)
+    results[k] = v
+  end
+  return results
+end
+
+
 -----------------
 --
 -- Functions of varying complexity levels to achieve
