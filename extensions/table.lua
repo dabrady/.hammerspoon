@@ -1,12 +1,43 @@
 local table_ext = {}
 
--- Handy (shallow) table print function
-function table_ext.print(t)
-  if type(t) ~= 'table' then return nil end
+-- Handy table print function. Supports arbitrary depth.
+function table_ext.print(t, depth)
+  if type(t) ~= 'table' then print(t) return end
+  depth = depth or 1
 
-  for k,v in pairs(t) do
-    print(tostring(k)..' \t'..tostring(v))
+  local function tabs(n)
+    local tabs = ''
+    for i=0,n do
+      tabs = tabs..'\t'
+    end
+    return tabs
   end
+
+  local function trimTrailingNewline(s)
+    return s:gsub('\n$', '')
+  end
+
+  local function walk(t, curIndentLvl, depth)
+    if next(t) == nil then return '' end -- empty table check
+
+    local tstring = '\n'
+    for k,v in pairs(t) do
+      local indent = tabs(curIndentLvl)
+      local kstring = trimTrailingNewline(tostring(k))
+      local vstring = nil
+      if type(v) == 'table' and depth > 1 then
+        vstring = string.format(' = table{%s%s}', walk(v, curIndentLvl + 1, depth - 1), indent)
+      else
+        vstring = string.format(' = %s', trimTrailingNewline(tostring(v)))
+      end
+
+      tstring = string.format("%s%s%s%s\n", tstring, indent, kstring, vstring)
+    end
+
+    return tstring
+  end
+
+  print('{'..walk(t, 0, depth)..'}')
 end
 
 -- Returns a list of the keys of the given table.
