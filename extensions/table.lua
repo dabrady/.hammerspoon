@@ -1,8 +1,8 @@
 local table_ext = {}
 
--- Handy table print function. Supports arbitrary depth.
-function table_ext.print(t, depth)
-  if type(t) ~= 'table' then print(t) return end
+-- Handy table formatting function. Supports arbitrary depth.
+function table_ext.format(t, depth)
+  if type(t) ~= 'table' then return tostring(t) end
   depth = depth or 1
 
   local function tabs(n)
@@ -37,7 +37,7 @@ function table_ext.print(t, depth)
     return tstring
   end
 
-  print('{'..walk(t, 0, depth)..'}')
+  return '{'..walk(t, 0, depth)..'}'
 end
 
 -- Returns a list of the keys of the given table.
