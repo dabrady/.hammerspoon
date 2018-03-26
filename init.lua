@@ -1,4 +1,5 @@
 -- Hammerspoon base config
+HS_PRINT = print
 hs.logger.setGlobalLogLevel('debug')
 hs.window.animationDuration = 0.0
 
@@ -12,6 +13,15 @@ do
   print('\t-- loading custom extensions')
   -- expose 'my' as new global variable
   my = fs.loadAllScripts('extensions')
+end
+-- Replace HS implementation of 'print'
+print = function(...)
+  local args = table.pack(...)
+  local strings = {}
+  for _,i in ipairs(args) do
+    table.insert(strings, my.table.format(i, 2))
+  end
+  HS_PRINT(table.unpack(strings))
 end
 
 WindowMgr = require('scripts/window_management')
