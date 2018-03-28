@@ -3,16 +3,18 @@ HS_PRINT = print
 hs.logger.setGlobalLogLevel('debug')
 hs.window.animationDuration = 0.0
 
+package.path = 'lib/?.lua;lib/lua-utils/?.lua;lib/lua-utils/?/?.lua;'..package.path
+
 -------------------------
 -- Load all the things --
 
 -- Custom extensions for console use
 do
   -- scope 'fs' to do-block
-  local fs = require('extensions/fs')
+  local fs = require('lua-utils/hammerspoon/fs')
   print('\t-- loading custom extensions')
   -- expose 'my' as new global variable
-  my = fs.loadAllScripts('extensions')
+  my = fs.loadAllFiles('lib/lua-utils', '.lua')
 end
 -- Replace HS implementation of 'print'
 print = function(...)

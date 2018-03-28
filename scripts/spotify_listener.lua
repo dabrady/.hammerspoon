@@ -1,4 +1,4 @@
-local my = {spotify = require('extensions.spotify')}
+local my = {spotify = require('lib/lua-utils/hammerspoon/spotify')}
 
 --- The hisses are too sensitive for an environment where lots of sound can reach the microphone.
 -- local BEGIN_HISS = 1
