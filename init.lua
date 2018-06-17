@@ -17,14 +17,25 @@ do
   my = fs.loadAllFiles('lib/lua-utils', '.lua')
 end
 -- Replace HS implementation of 'print'
-print = function(...)
-  local args = table.pack(...)
-  local strings = {}
-  for _,i in ipairs(args) do
-    table.insert(strings, my.table.format(i, 2))
+function make_printer(depth)
+  return function(...)
+    local args = table.pack(...)
+    local strings = {}
+    for _,arg in ipairs(args) do
+      local str
+      local meta = getmetatable(arg)
+      if meta ~= nil and meta.__tostring ~= nil then
+        str = tostring(arg)
+      else
+        str = my.table.format(arg, depth)
+      end
+
+      table.insert(strings, str)
+    end
+    HS_PRINT(table.unpack(strings))
   end
-  HS_PRINT(table.unpack(strings))
 end
+function print(...) return make_printer(2)(...) end
 
 WindowMgr = require('scripts/window_management')
 MC = require('scripts/microphone_controller')
