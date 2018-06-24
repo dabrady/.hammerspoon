@@ -40,10 +40,12 @@ function print(...) return make_printer(2)(...) end
 WindowMgr = require('scripts/window_management')
 MC = require('scripts/microphone_controller')
 
--- ConfigWatcher = require('scripts/config_watcher')
+ConfigWatcher = require('scripts/config_watcher')
 WifiWatcher = require('scripts/wifi_watcher')
 HeadphoneWatcher = require('scripts/headphone_watcher')
 SpotifyListener = require('scripts/spotify_listener')
+-- KeyboardLayoutWatcher = require('scripts/keyboard_layout_watcher')
+-- DvorakWatcher = require('scripts/dvorak_watcher')
 
 Mode = hs.loadSpoon('Mode')
 -- local work = Mode:availableModes()['Work']
@@ -55,6 +57,7 @@ local modsToStart = {
   -- ConfigWatcher,
   WifiWatcher,
   HeadphoneWatcher,
+  -- DvorakWatcher,
   -- SpotifyListener
 }
 hs.fnutils.each(modsToStart, function(module) module:start() end)
@@ -66,7 +69,9 @@ hs.shutdownCallback = function()
 end
 
 -------
-hs.alert.show('Config refreshed')
+hs.notify.new({
+  title="Config Refreshed"
+}):send()
 -------
 
 
