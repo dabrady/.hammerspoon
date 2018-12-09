@@ -2,6 +2,7 @@
 HS_PRINT = print
 hs.logger.setGlobalLogLevel('debug')
 hs.window.animationDuration = 0.0
+require("hs.ipc")
 
 package.path = 'lib/?.lua;lib/lua-utils/?.lua;lib/lua-utils/?/?.lua;'..package.path
 
