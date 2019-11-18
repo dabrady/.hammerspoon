@@ -13,10 +13,10 @@ package.path = 'lib/?.lua;lib/lua-utils/?.lua;lib/lua-utils/?/?.lua;'..package.p
 do
   -- scope 'fs' to do-block
   local fs = require('lua-utils/hammerspoon/fs')
-  print('\t-- loading custom extensions')
   -- expose 'my' as new global variable
   my = fs.loadAllFiles('lib/lua-utils', '.lua')
 end
+
 -- Replace HS implementation of 'print'
 function make_printer(depth)
   return function(...)
@@ -48,9 +48,14 @@ SpotifyListener = require('scripts/spotify_listener')
 -- KeyboardLayoutWatcher = require('scripts/keyboard_layout_watcher')
 -- DvorakWatcher = require('scripts/dvorak_watcher')
 
-Mode = hs.loadSpoon('Mode')
--- local work = Mode:availableModes()['Work']
--- work:enter()
+-- UNDER CONSTRUCTION --
+-- Flow = hs.loadSpoon('Flow'):bindHotkeys({
+--     showFlowPalette = {{'ctrl', 'alt', 'cmd'}, 'space'}
+--                                        })
+-- Mode = hs.loadSpoon('Mode')
+-- Mode:availableModes()['Work']:enter()
+
+-----
 
 --------------------------
 -- Start all the things --
