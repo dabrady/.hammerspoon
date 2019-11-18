@@ -1,7 +1,7 @@
 local my = {spotify = require('lib/lua-utils/hammerspoon/spotify')}
 
-local builtinOutputUID = 'AppleHDAEngineOutput:1B,0,1,1:0'
--- local builtinMicrophoneUID = 'AppleHDAEngineInput:1B,0,1,0:1'
+local builtinOutputUID = 'BuiltInSpeakerDevice'
+-- local builtinMicrophoneUID = 'BuiltInMicrophoneDevice'
 
 local audioOutput = hs.audiodevice.findDeviceByUID(builtinOutputUID)
 -- local microphone = hs.audiodevice.findDeviceByUID(builtinMicrophoneUID)
