@@ -39,19 +39,20 @@ end
 function print(...) return make_printer(2)(...) end
 
 WindowMgr = require('scripts/window_management')
-MC = require('scripts/microphone_controller')
+-- MC = require('scripts/microphone_controller')
 
 ConfigWatcher = require('scripts/config_watcher')
-WifiWatcher = require('scripts/wifi_watcher')
-HeadphoneWatcher = require('scripts/headphone_watcher')
-SpotifyListener = require('scripts/spotify_listener')
+-- WifiWatcher = require('scripts/wifi_watcher')
+-- HeadphoneWatcher = require('scripts/headphone_watcher')
+-- SpotifyListener = require('scripts/spotify_listener')
 -- KeyboardLayoutWatcher = require('scripts/keyboard_layout_watcher')
 -- DvorakWatcher = require('scripts/dvorak_watcher')
 
 -- UNDER CONSTRUCTION --
--- Flow = hs.loadSpoon('Flow'):bindHotkeys({
---     showFlowPalette = {{'ctrl', 'alt', 'cmd'}, 'space'}
---                                        })
+-- BluetoothWatcher = require('scripts/bluetooth_watcher')
+Flow = hs.loadSpoon('Flow'):bindHotkeys({
+    showFlowPalette = {{'ctrl', 'alt', 'cmd'}, 'space'}
+})
 -- Mode = hs.loadSpoon('Mode')
 -- Mode:availableModes()['Work']:enter()
 
@@ -60,9 +61,10 @@ SpotifyListener = require('scripts/spotify_listener')
 --------------------------
 -- Start all the things --
 local modsToStart = {
-  -- ConfigWatcher,
-  WifiWatcher,
-  HeadphoneWatcher,
+  ConfigWatcher,
+  -- WifiWatcher,
+  -- HeadphoneWatcher,
+  -- BluetoothWatcher,
   -- DvorakWatcher,
   -- SpotifyListener
 }
