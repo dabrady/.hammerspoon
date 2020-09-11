@@ -1,14 +1,17 @@
 -- Hammerspoon base config
+HS_LOC = '/Users/daniel.brady/.hammerspoon'
+
 hs.logger.setGlobalLogLevel('debug')
 hs.window.animationDuration = 0.0
 require("hs.ipc")
 
 do
   package.path = ''
-    ..'lib/?.lua;'
+    ..'./?.lua;'
+    ..'./?/init.lua;'
     ..'/Users/daniel.brady/github/?/?.lua;'
+    ..'lib/?.lua;'
     ..package.path
-  OLD_PATH = package.path
 end
 
 -------------------------
@@ -48,13 +51,19 @@ do
     return f
   end
   function print(...) return HS_PRINT(table.unpack(make_formatter(2)(...))) end
+end
+
+function flush(...)
+  local args = {...}
+  for i=1,#args do
+    package.loaded[args[i]] = nil
   end
 end
 
 WindowMgr = require('scripts/window_management')
 -- MC = require('scripts/microphone_controller')
 
-ConfigWatcher = require('scripts/config_watcher')
+-- ConfigWatcher = require('scripts/config_watcher')
 -- WifiWatcher = require('scripts/wifi_watcher')
 -- HeadphoneWatcher = require('scripts/headphone_watcher')
 -- SpotifyListener = require('scripts/spotify_listener')
@@ -63,8 +72,11 @@ ConfigWatcher = require('scripts/config_watcher')
 
 -- UNDER CONSTRUCTION --
 -- BluetoothWatcher = require('scripts/bluetooth_watcher')
-Flow = hs.loadSpoon('Flow'):bindHotkeys({
-    showFlowPalette = {{'ctrl', 'alt', 'cmd'}, 'space'}
+Flow = hs.loadSpoon('Flow'):configure({
+    database_location = HS_LOC..'/hs.db',
+    hotkeys = {
+      show_flow_palette = {{'ctrl', 'alt', 'cmd'}, 'space'}
+    }
 })
 -- Mode = hs.loadSpoon('Mode')
 -- Mode:availableModes()['Work']:enter()
@@ -74,7 +86,8 @@ Flow = hs.loadSpoon('Flow'):bindHotkeys({
 --------------------------
 -- Start all the things --
 local modsToStart = {
-  ConfigWatcher,
+  Flow,
+  -- ConfigWatcher,
   -- WifiWatcher,
   -- HeadphoneWatcher,
   -- BluetoothWatcher,
