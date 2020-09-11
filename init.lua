@@ -1,10 +1,15 @@
 -- Hammerspoon base config
-HS_PRINT = print
 hs.logger.setGlobalLogLevel('debug')
 hs.window.animationDuration = 0.0
 require("hs.ipc")
 
-package.path = 'lib/?.lua;lib/lua-utils/?.lua;lib/lua-utils/?/?.lua;'..package.path
+do
+  package.path = ''
+    ..'lib/?.lua;'
+    ..'/Users/daniel.brady/github/?/?.lua;'
+    ..package.path
+  OLD_PATH = package.path
+end
 
 -------------------------
 -- Load all the things --
@@ -17,26 +22,34 @@ do
   my = fs.loadAllFiles('lib/lua-utils', '.lua')
 end
 
--- Replace HS implementation of 'print'
-function make_printer(depth)
-  return function(...)
-    local args = table.pack(...)
-    local strings = {}
-    for _,arg in ipairs(args) do
-      local str
-      local meta = getmetatable(arg)
-      if meta ~= nil and meta.__tostring ~= nil then
-        str = tostring(arg)
-      else
-        str = my.table.format(arg, depth)
+do
+  HS_PRINT = print
+  HS_TOSTRING = tostring
+  -- Wrap HS implementation of 'print'
+  local function make_formatter(depth)
+    local function f(...)
+      local args = table.pack(...)
+      local strings = {}
+      for _,arg in ipairs(args) do
+        local str
+        local meta = getmetatable(arg)
+        if meta ~= nil and meta.__tostring ~= nil then
+          str = HS_TOSTRING(arg)
+        else
+          str = my.table.format(arg, { depth = depth })
+        end
+
+        table.insert(strings, str)
       end
 
-      table.insert(strings, str)
+      return strings
     end
-    HS_PRINT(table.unpack(strings))
+
+    return f
+  end
+  function print(...) return HS_PRINT(table.unpack(make_formatter(2)(...))) end
   end
 end
-function print(...) return make_printer(2)(...) end
 
 WindowMgr = require('scripts/window_management')
 -- MC = require('scripts/microphone_controller')
