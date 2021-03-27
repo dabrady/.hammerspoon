@@ -50,6 +50,10 @@ do
 
     return f
   end
+  --[[ TODO(dabrady)
+    This is weird, and I haven't reasoned out why yet, but this implementation
+    stops printing at the first `nil` argument. I need to fix it.
+  ]]
   function print(...) return HS_PRINT(table.unpack(make_formatter(2)(...))) end
 end
 
@@ -86,7 +90,7 @@ Flow = hs.loadSpoon('Flow'):configure({
 --------------------------
 -- Start all the things --
 local modsToStart = {
-  Flow,
+  -- Flow,
   -- ConfigWatcher,
   -- WifiWatcher,
   -- HeadphoneWatcher,
