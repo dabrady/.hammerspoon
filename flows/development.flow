@@ -1,0 +1,21 @@
+local BaseFlow = ... -- Expect our base object to be passed in while loading this file.
+local generate_choice_table = require('lib/lua-utils/hammerspoon/chooser').generateChoiceTable
+
+return BaseFlow.new('Development')
+  :set_action_palette({
+    {
+      name = 'Open project',
+      command = function()
+        local prodperfect_project_root = '~/github/prodperfect/'
+        local prodperfect_projects = generate_choice_table(hs.fs.dirs(prodperfect_project_root))
+        BaseFlow.create_chooser(
+          function(project)
+            if project ~= nil then
+              local project_path = prodperfect_project_root..project.text
+              hs.execute('emacsclient -n '..project_path, true)
+            end
+          end
+        ):choices(prodperfect_projects):show()
+      end
+    }
+  })

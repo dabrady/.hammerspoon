@@ -77,6 +77,7 @@ WindowMgr = require('scripts/window_management')
 -- UNDER CONSTRUCTION --
 -- BluetoothWatcher = require('scripts/bluetooth_watcher')
 Flow = hs.loadSpoon('Flow'):configure({
+    flow_root = HS_LOC..'/flows',
     database_location = HS_LOC..'/hs.db',
     hotkeys = {
       show_flow_palette = {{'ctrl', 'alt', 'cmd'}, 'space'}
