@@ -3,7 +3,12 @@ HS_LOC = '/Users/daniel.brady/.hammerspoon'
 
 hs.logger.setGlobalLogLevel('debug')
 hs.window.animationDuration = 0.0
+
+-- Provides a Hammerspoon CLI called `hs`
 require("hs.ipc")
+if not hs.ipc.cliStatus() then
+  hs.ipc.cliInstall()
+end
 
 do
   package.path = ''
